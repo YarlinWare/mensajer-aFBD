@@ -20,13 +20,13 @@ public class DBConexion {
     static String url = "jdbc:postgresql://mensajeriafbd.csvkszv7bls2.us-east-1.rds.amazonaws.com:5432/mensajeria_fbd_aws";
     static String mensaje = "";
     
-    Connection conexion = null;
+    public Connection conexion = null;
     /**
      * Constructor de la clase
      */
     public DBConexion() {
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
             conexion = DriverManager.getConnection(url,login,password);
 
             if (conexion!=null){
