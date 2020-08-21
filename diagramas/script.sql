@@ -1,4 +1,4 @@
-
+DROP TABLE cliente, estado, horario, mensajero, servicio, telefono, tipo_paquete, trayecto;
 
 CREATE TABLE cliente
 (
@@ -64,8 +64,6 @@ CREATE TABLE servicio
 )
 ;
 
-
-
 CREATE TABLE telefono
 (
 	k_telefono numeric(10) NOT NULL,
@@ -77,9 +75,9 @@ CREATE TABLE telefono
 CREATE TABLE tipo_paquete
 (
 	k_id_tipo_paquete serial NOT NULL,
-	n_tipo char(50) NOT NULL,
+	n_tipo char(4) NOT NULL,
 	o_descripcion text NULL,
-	k_id_servicio integer NULL
+	--k_id_servicio integer NULL
 )
 ;
 
@@ -88,8 +86,8 @@ CREATE TABLE trayecto
 	k_id_trayecto serial NOT NULL,
 	d_dir_origen varchar(50) NOT NULL,
 	d_dir_destino varchar(50) NOT NULL,
-	"K_id_servicio" integer NULL,
-	k_id_tipo_servicio integer NULL
+	k_id_servicio integer NULL,
+	--k_id_tipo_servicio integer NULL
 )
 ;
 
@@ -152,14 +150,13 @@ ALTER TABLE tipo_paquete ADD CONSTRAINT "PK_id_tipo_paquete"
 ALTER TABLE tipo_paquete ADD CONSTRAINT "CK_n_tipo" CHECK (n_tipo IN ('MP6M','MP6P','DUB','S','DUT','V','AJ','DM','C'))
 ;
 
-CREATE INDEX "IXFK_tipo_paquete_servicio" ON tipo_paquete (k_id_servicio ASC)
-;
+--CREATE INDEX "IXFK_tipo_paquete_servicio" ON tipo_paquete (k_id_servicio ASC);
 
 ALTER TABLE trayecto ADD CONSTRAINT "PK_id_trayecto"
 	PRIMARY KEY (k_id_trayecto)
 ;
 
-CREATE INDEX "IXFK_trayecto_servicio" ON trayecto ("K_id_servicio" ASC)
+CREATE INDEX "IXFK_trayecto_servicio" ON trayecto (k_id_servicio ASC)
 ;
 
 /* Create Foreign Key Constraints */
@@ -184,12 +181,12 @@ ALTER TABLE telefono ADD CONSTRAINT "FK_telefono_cliente"
 	FOREIGN KEY (k_num_documento,k_tipo_documento) REFERENCES cliente (k_num_documento,k_tipo_documento) ON DELETE No Action ON UPDATE No Action
 ;
 
-ALTER TABLE tipo_paquete ADD CONSTRAINT "FK_tipo_paquete_servicio"
+/*ALTER TABLE tipo_paquete ADD CONSTRAINT "FK_tipo_paquete_servicio"
 	FOREIGN KEY (k_id_servicio) REFERENCES servicio (k_id_servicio) ON DELETE No Action ON UPDATE No Action
-;
+;*/
 
 ALTER TABLE trayecto ADD CONSTRAINT "FK_trayecto_servicio"
-	FOREIGN KEY ("K_id_servicio") REFERENCES servicio (k_id_servicio) ON DELETE No Action ON UPDATE No Action
+	FOREIGN KEY (k_id_servicio) REFERENCES servicio (k_id_servicio) ON DELETE No Action ON UPDATE No Action
 
 ;
 
@@ -199,5 +196,65 @@ INSERT INTO mensajero VALUES(1010101011, 'CE', 'Raúl','','Chato', 'Padilla',300
 
 INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
 		VALUES('Lunes', '07:00' + interval '1 hours','17:00', 1010101011, 'CE' );
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Martes', '07:00' + interval '1 hours','17:00', 1010101011, 'CE' );
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Miércoles', '08:00' + interval '1 hours','17:00', 1010101011, 'CE' );
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Jueves', '07:00' + interval '1 hours','17:00', 1010101011, 'CE' );
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Viernes', '07:00' + interval '1 hours','17:00', 1010101011, 'CE' );
+
+INSERT INTO tipo_paquete (n_tipo,o_descripcion) VALUES('MP6M', 'Mercancía Premier (hasta 6 Kg)');
+INSERT INTO tipo_paquete (n_tipo,o_descripcion) VALUES('MP6P', 'Mercancía Premier (después de 6kg) y múltiples piezas');
+INSERT INTO tipo_paquete (n_tipo,o_descripcion) VALUES('DUB', 'Documento Unitario (Origen Bogotá)');
+INSERT INTO tipo_paquete (n_tipo,o_descripcion) VALUES('S', 'Sobreporte');
+INSERT INTO tipo_paquete (n_tipo,o_descripcion) VALUES('DUT', 'Documento Unitario (Otros orígenes)');
+INSERT INTO tipo_paquete (n_tipo,o_descripcion) VALUES('V', 'Valores');
+INSERT INTO tipo_paquete (n_tipo,o_descripcion) VALUES('AJ', 'Avisos Judiciales');
+INSERT INTO tipo_paquete (n_tipo,o_descripcion) VALUES('DM', 'Documentos Masivos');
+INSERT INTO tipo_paquete (n_tipo,o_descripcion) VALUES('C', 'Cajaporte');
 
 
+INSERT INTO mensajero VALUES(1010101011, 'CC', 'Gabriel','','García', 'Márquez',3003013130,'M', '1927-04-17','Aracataca',125, 'Motocicleta');
+INSERT INTO mensajero VALUES(1010551011, 'MS', 'Candelario','','Obeso', 'Hernández',3003223030,'M', '1884-01-12','Mompós',124, 'Vehiculo');
+INSERT INTO mensajero VALUES(1066101011, 'PA', 'Rafael ','','Pombo', '',3003333030,'M', '1833-11-07','Bogotá',123, 'Bicicleta');
+INSERT INTO mensajero VALUES(7710101011, 'RC', 'Soledad','','Acosta', 'de Samper',3003443030,'F', '1833-05-05','Bogotá',126, 'Motocicleta');
+
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Lunes', '07:00','17:00', 1010551011, 'MS' );
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Martes', '07:00','17:00', 1010551011, 'MS' );
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Miércoles', '08:00','18:00', 1010551011, 'MS' );
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Jueves', '07:00','17:00', 1010551011, 'MS' );
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Viernes', '07:00','17:00', 1010551011, 'MS' );
+
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Domingo', '07:00','17:00', 1066101011, 'PA' );
+
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Jueves', '07:00','17:00', 7710101011, 'RC' );
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Sábado', '08:00','18:00', 7710101011, 'RC' );
+
+
+
+
+INSERT INTO servicio
+	(k_id_tipo_paquete,k_num_documento_usuario,k_tipo_documento_usuario, k_num_documento_mensajero, k_tipo_documento_mensajero, f_fecha, f_hora, v_valor_servicio) 
+	VALUES(1, 1010101010,'CE',null ,null , '2020-08-15','8:00:00',null);
+
+INSERT INTO servicio
+	(k_id_tipo_paquete,k_num_documento_usuario,k_tipo_documento_usuario, f_fecha, f_hora)
+	VALUES(1, 1010101010,'CE', '2020-08-15','8:00:00');
+
+UPDATE servicio SET k_id_tipo_paquete=4, f_fecha= '2020-08-16', f_hora= '8:31:54' WHERE k_id_servicio = 2;
+
+INSERT INTO trayecto (k_id_servicio, d_dir_origen, d_dir_destino )
+	VALUES (1, 'AV la Esperanza', 'Av el Dorado');
+
+INSERT INTO trayecto (k_id_servicio, d_dir_origen, d_dir_destino )
+	VALUES (2, 'AV Jiménez', 'Calle 45');
