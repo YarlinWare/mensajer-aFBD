@@ -24,7 +24,7 @@ CREATE TABLE estado
 
 CREATE TABLE horario
 (
-	k_id_horario integer NOT NULL,
+	k_id_horario SERIAL NOT NULL,
 	n_dia varchar(9) NOT NULL,
 	o_hora_inicio time without time zone NOT NULL,
 	o_hora_final time without time zone NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE mensajero
 
 CREATE TABLE servicio
 (
-	k_id_servicio integer NOT NULL,
+	k_id_servicio serial NOT NULL,
 	k_id_tipo_paquete integer NOT NULL,
 	k_num_documento_usuario numeric(10) NOT NULL,
 	k_tipo_documento_usuario char(2) NOT NULL,
@@ -64,6 +64,8 @@ CREATE TABLE servicio
 )
 ;
 
+
+
 CREATE TABLE telefono
 (
 	k_telefono numeric(10) NOT NULL,
@@ -74,7 +76,7 @@ CREATE TABLE telefono
 
 CREATE TABLE tipo_paquete
 (
-	k_id_tipo_paquete integer NOT NULL,
+	k_id_tipo_paquete serial NOT NULL,
 	n_tipo char(50) NOT NULL,
 	o_descripcion text NULL,
 	k_id_servicio integer NULL
@@ -83,7 +85,7 @@ CREATE TABLE tipo_paquete
 
 CREATE TABLE trayecto
 (
-	k_id_trayecto integer NOT NULL,
+	k_id_trayecto serial NOT NULL,
 	d_dir_origen varchar(50) NOT NULL,
 	d_dir_destino varchar(50) NOT NULL,
 	"K_id_servicio" integer NULL,
@@ -190,5 +192,12 @@ ALTER TABLE trayecto ADD CONSTRAINT "FK_trayecto_servicio"
 	FOREIGN KEY ("K_id_servicio") REFERENCES servicio (k_id_servicio) ON DELETE No Action ON UPDATE No Action
 
 ;
+
+INSERT INTO cliente VALUES(1010101010, 'CE', 'Miguel ','de Cervantes','Saavedra ', '','M', '1547-09-29','mdcervantess@gmail.com'  );
+INSERT INTO telefono VALUES(7654321, 1010101010, 'CE');
+INSERT INTO mensajero VALUES(1010101011, 'CE', 'Raúl','','Chato', 'Padilla',3003003030,'M', '1909-06-29','Tangamandapio',123, 'Bicicleta');
+
+INSERT INTO horario (n_dia, o_hora_inicio, o_hora_final,k_num_documento,k_tipo_documento)
+		VALUES('Lunes', '07:00' + interval '1 hours','17:00', 1010101011, 'CE' );
 
 
