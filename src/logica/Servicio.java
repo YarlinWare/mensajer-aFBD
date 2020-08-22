@@ -14,13 +14,13 @@ public class Servicio {
     int k_id_tipo_paquete;
     int k_num_documento_usuario;
     String k_tipo_documento_usuario;
-    String k_num_documento_mensajero;
+    int k_num_documento_mensajero;
     String k_tipo_documento_mensajero;
     String f_fecha;
     String f_hora;
     String v_valor_servicio;
 
-    public Servicio(int k_id_servicio, int k_id_tipo_paquete, int k_num_documento_usuario, String k_tipo_documento_usuario, String k_num_documento_mensajero, String k_tipo_documento_mensajero, String f_fecha, String f_hora, String v_valor_servicio) {
+    public Servicio(int k_id_servicio, int k_id_tipo_paquete, int k_num_documento_usuario, String k_tipo_documento_usuario, int k_num_documento_mensajero, String k_tipo_documento_mensajero, String f_fecha, String f_hora, String v_valor_servicio) {
         this.k_id_servicio = k_id_servicio;
         this.k_id_tipo_paquete = k_id_tipo_paquete;
         this.k_num_documento_usuario = k_num_documento_usuario;
@@ -65,11 +65,11 @@ public class Servicio {
         this.k_tipo_documento_usuario = k_tipo_documento_usuario;
     }
 
-    public String getK_num_documento_mensajero() {
+    public int getK_num_documento_mensajero() {
         return k_num_documento_mensajero;
     }
 
-    public void setK_num_documento_mensajero(String k_num_documento_mensajero) {
+    public void setK_num_documento_mensajero(int k_num_documento_mensajero) {
         this.k_num_documento_mensajero = k_num_documento_mensajero;
     }
 
